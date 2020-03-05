@@ -125,6 +125,7 @@ int failure_number = 0; // number of failure connecting to MQTT
   #include <WiFi.h>
   #include <ArduinoOTA.h>
   #include <WiFiUdp.h>
+  #include "esp_wifi.h"
   WiFiClient eClient;
   #include <WiFiManager.h>
 #ifdef MDNS_SD
@@ -133,6 +134,7 @@ int failure_number = 0; // number of failure connecting to MQTT
 #elif defined(ESP8266)
   #include <FS.h>
   #include <ESP8266WiFi.h>
+  #include "esp_wifi.h"
   #include <ArduinoOTA.h>
   #include <DNSServer.h>
   #include <ESP8266WebServer.h>
@@ -798,6 +800,10 @@ void setup_wifimanager(bool reset_settings)
     eraseAndRestart();
 
   WiFi.mode(WIFI_STA);
+  #ifdef ESP32
+    Log.trace(F("Setting to wifi B for testing reconnection" CR));
+    esp_wifi_set_protocol(WIFI_IF_STA, WIFI_PROTOCOL_11B);
+  #endif
 
   //read configuration from FS json
   Log.trace(F("mounting FS..." CR));
