@@ -88,6 +88,8 @@ mosquitto_pub -t home/OpenMQTTGateway/commands/MQTTtoIR -m '{"value":551489775,"
 
 ## Send raw IR data by MQTT
 
+1) First you need to modify the library `pubsubclient.h` by replacing `#define MQTT_MAX_PACKET_SIZE 128` by `#define MQTT_MAX_PACKET_SIZE 512` To enable sending larger MQTT packet (may up to 1024 if IR decode return 50 bits raw)
+
 2) If you use an arduino UNO enable `IR_Raw` by uncommenting the line 129 in user_config.h
 `#define IR_Raw`
 If you are using the uno you will have to comment other gateway like ZgatewayRF, ZgatewayBT and ZgatewayIR to keep enough memory
